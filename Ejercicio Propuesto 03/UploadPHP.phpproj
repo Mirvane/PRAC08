@@ -1,0 +1,13 @@
+<Project Sdk="Devsense.Php.Sdk">
+  <PropertyGroup>
+    <EnvName>PHPDev</EnvName>
+    <RuntimeVersion>8.0</RuntimeVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Estadistica\" />
+    <Folder Include="DesarrolloWeb\" />
+    <Folder Include="Sistemas Administrativos\" />
+    <Folder Include="Testing\" />
+    <Folder Include="uploads\" />
+  </ItemGroup>
+</Project>

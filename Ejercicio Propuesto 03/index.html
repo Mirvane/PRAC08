@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Inscripcion</title>
+    <style>
+        table, th, td{
+            background:#cfcfcf;
+            border: 1px solid black;
+            border-collapse: collapse;     
+            text-align:center;
+        }
+        th,td{
+           height:40px;
+           width:190px;
+        }
+        .tab1 {
+            background: #cfcfcf;
+            border: none;
+            text-align:left;
+        }
+        textarea{
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="Confirmacion.php">
+        <table>
+            <tr>
+                <td>
+                    Nombre completo
+                </td>
+                <td>
+                    <input type="text" name="nombre" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Direccion
+                </td>
+                 <td>
+                     <textarea type="text" name="direccion" maxlength="50" rows="4" cols="4" style="height:50px; width:180px;";></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Coreo electronico
+                </td>
+                 <td>
+                     <input type="text" name="correo_electronico" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Contraseña
+                </td>
+                 <td>
+                     <input type="text" name="contrasenia" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Confirmar Contraseña
+                </td>
+                 <td>
+                     <input type="text" name="conf_contrasenia" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fecha de nacimineto
+                </td>
+                 <td>
+                     <input type="text" name="dia" style="width: 25px";/>
+                     <select name="mes">
+                         <option selected disabled>Mes</option>
+                         <option value="Enero">Enero</option>
+                         <option value="Febrero">Febrero</option>
+                         <option value="Marzo">Marzo</option>
+                         <option value="Abril">Abril</option>
+                         <option value="Mayo">Mayo</option>
+                         <option value="Junio">Junio</option>
+                         <option value="Julio">Julio</option>
+                         <option value="Agosto">Agosto</option>
+                         <option value="Septiembre">Septiembre</option>
+                         <option value="Octubre">Octubre</option>
+                         <option value="Noviembre">Noviembre</option>
+                         <option value="Diciembre">Diciembre</option>
+                     </select>
+                     <input type="text" name="anio" style="width: 35px";/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Sexo
+                </td>
+                 <td>
+                     <input type="radio" name="gender" value="male">Hombre
+                     <input type="radio" name="gender" value="female">Mujer
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Por favor, elige los<br />
+                    temas de interes
+                </td>
+                 <td>
+                     <table class="tab1">
+                         <tr class="tab1">
+                             <td class="tab1">
+                                 <input type="checkbox" name="ficcion"/>Ficcion
+                             </td class="tab1">
+                             <td class="tab1">
+                                 <input type="checkbox" name="terror"/>Terror
+                             </td>
+                         </tr>
+                         <tr class="tab1">
+                             <td class="tab1">
+                                 <input type="checkbox" name="accion"/>Accion
+                             </td>
+                             <td class="tab1">
+                                 <input type="checkbox" name="comedia"/>Comedia
+                             </td>
+                         </tr>
+                         <tr class="tab1">
+                             <td class="tab1">
+                                 <input type="checkbox" name="suspenso"/>Suspenso
+                             </td>
+                         </tr>
+                     </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Selecciona tus <br />
+                    aficiones <br />
+                    (Ctrl + Click)
+                </td>
+                 <td>
+                     <select name="aficciones[]" size="5" multiple="multiple">
+                         <option value="Correr">Correr</option>
+                         <option value="Cocinar">Cocinar</option>
+                         <option value="Pintar">Pintar</option>
+                         <option value="Dormir">Dormir</option>
+                         <option value="Tocar Un Instrumento">Tocar Un Instrumento</option>
+                         <option value="Bailar">Bailar</option>
+                         <option value="Escribir">Escribir</option>
+                         <option value="Practicar Deportes">Practicar Deportes</option>
+                         <option value="Viajar">Viajar</option>
+                         <option value="Artesania">Artesania</option>
+                         <option value="Montar bicicleta">Montar bicicleta</option>
+                         <option value="Nadar">Nadar</option>
+                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" name="submit" value="Siguiente" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

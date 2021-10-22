@@ -1,0 +1,310 @@
+//Ejecución de MySQL
+
+cd C:\xampp\mysql\bin 
+mysql -u root –p mysql
+
+//Cancelación de una linea de comandos
+
+meaningless gibberish to mysql \c
+
+//Creación de la base de datos 'publications' y uso de ella
+
+CREATE DATABASE publications;
+USE publications;
+
+//COMANDO GRANT
+
+GRANT ALL ON publications.* TO 'jim'@'localhost' 
+IDENTIFIED BY 'mypasswd';
+
+//Creación de la tabla 'classics' y descripción de esta
+CREATE TABLE classics ( 
+author VARCHAR(128), 
+title VARCHAR(128), 
+type VARCHAR(16), 
+year CHAR(4)) ENGINE InnoDB;
+
+DESCRIBE classics;
+
+//Agregar columna ' id'
+ALTER TABLE classics ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT KEY;
+
+//Eliminar columna 'id'
+ALTER TABLE classics DROP id;
+
+//Ingreso de datos a la tabla 'classics'
+INSERT INTO classics(author, title, type, year) 
+VALUES('Mark Twain','The Adventures of Tom Sawyer','Fiction','1876'); 
+INSERT INTO classics(author, title, type, year) 
+VALUES('Jane Austen','Pride and Prejudice','Fiction','1811');
+INSERT INTO classics(author, title, type, year) 
+VALUES('Charles Darwin','The Origin of Species','Non-Fiction','1856'); 
+INSERT INTO classics(author, title, type, year) 
+VALUES('Charles Dickens','The Old Curiosity Shop','Fiction','1841'); 
+INSERT INTO classics(author, title, type, year) 
+VALUES('William Shakespeare','Romeo and Juliet','Play','1594');
+
+//Mostrar el contendio de la tabla 'classics'
+SELECT * FROM classics;
+
+//Renombrar la tabla 'classics' por 'pre1900'
+ALTER TABLE classics RENAME pre1900;
+
+//Cambiar tipo de datos de la columna 'year'
+ALTER TABLE pre1900 MODIFY year SMALLINT;
+
+//Agregar nueva columna
+ALTER TABLE pre1900 ADD pages SMALLINT UNSIGNED;
+
+//Cambiar nombre de la columna creada
+ALTER TABLE pre1900 CHANGE type category VARCHAR(16);
+
+//Eliminar una columna
+
+ALTER TABLE pre1900 DROP pages;
+
+//Crear, ver y eliminar una tabla
+CREATE TABLE disposable(trash INT); 
+DESCRIBE disposable; 
+DROP TABLE disposable; 
+SHOW tables;
+
+//Agregar índices a la tabla pre1900
+
+ALTER TABLE classics ADD INDEX(author(20)); 
+ALTER TABLE classics ADD INDEX(title(20)); 
+ALTER TABLE classics ADD INDEX(category(4)); 
+ALTER TABLE classics ADD INDEX(year); 
+DESCRIBE classics;
+
+//Crear tabla classics con índices
+
+CREATE TABLE classics ( 
+author VARCHAR(128), 
+title VARCHAR(128), 
+category VARCHAR(16), 
+year SMALLINT, 
+INDEX(author(20)), 
+INDEX(title(20)), 
+INDEX(category(4)), 
+INDEX(year)) ENGINE InnoDB;
+
+//Crear tabla classics1 y eliminarla
+
+CREATE TABLE classics1(trash INT); 
+DROP TABLE classics1; 
+
+//Llenar la columna isbn con datos y usar una clave principal
+
+ALTER TABLE classics ADD isbn CHAR(13); 
+UPDATE classics SET isbn='9781598184891' WHERE year='1876'; 
+UPDATE classics SET isbn='9780582506206' WHERE year='1811'; 
+UPDATE classics SET isbn='9780517123201' WHERE year='1856'; 
+UPDATE classics SET isbn='9780099533474' WHERE year='1841'; 
+UPDATE classics SET isbn='9780192814968' WHERE year='1594'; 
+ALTER TABLE classics ADD PRIMARY KEY(isbn); 
+DESCRIBE classics;
+
+//Creando la tabla classics1 con una clave primaria
+
+CREATE TABLE classics ( 
+author VARCHAR(128), 
+title VARCHAR(128), 
+category VARCHAR(16), 
+year SMALLINT, 
+isbn CHAR(13), 
+INDEX(author(20)), 
+INDEX(title(20)), 
+INDEX(category(4)), 
+INDEX(year), 
+PRIMARY KEY (isbn)) ENGINE InnoDB;
+
+//Agregar un índice fulltext a la tabla classics
+
+ALTER TABLE classics ADD FULLTEXT(author,title);
+
+//Dos SELECT diferentes
+
+SELECT author,title FROM classics; 
+SELECT title,isbn FROM classics;
+
+//Contar filas
+
+SELECT COUNT(*) FROM pre1900;
+
+//Con y sin el calificador DISTINCT
+
+SELECT author FROM classics; 
+SELECT DISTINCT author FROM classics;
+
+//Eliminar la nueva entrada
+
+DELETE FROM pre1900 WHERE title='Little Dorrit';
+
+//Uso del comando WHERE
+
+SELECT author,title FROM pre1900 WHERE author="Mark Twain"; 
+SELECT author,title FROM pre1900 WHERE isbn="9781598184891";
+
+//Uso del calificador LIKE 
+SELECT author,title 
+FROM pre1900
+WHERE author LIKE "Charles%"; 
+
+SELECT author,title 
+FROM pre1900 
+WHERE title LIKE "%Species"; 
+
+SELECT author,title 
+FROM pre1900 
+WHERE title LIKE "%and%";
+
+//Limitar el número de resultados devueltos 
+SELECT author,title 
+FROM pre1900 LIMIT 3; 
+
+SELECT author,title 
+FROM pre1900 LIMIT 1,2; 
+
+SELECT author,title 
+FROM pre1900 LIMIT 3,1;
+
+//Uso de MATCH ... AGAINST en índices FULLTEXT 
+SELECT author,title 
+FROM pre1900 
+WHERE MATCH(author,title) AGAINST('and'); 
+
+SELECT author,title 
+FROM pre1900
+WHERE MATCH(author,title) AGAINST('curiosity shop'); 
+
+SELECT author,title 
+FROM pre1900 
+WHERE MATCH(author,title) AGAINST('tom sawyer');
+
+//Uso de MATCH ... AGAINST en modo booleano 
+SELECT author,title 
+FROM pre1900
+WHERE MATCH(author,title) 
+AGAINST('+charles -species' IN BOOLEAN MODE); 
+
+SELECT author,title 
+FROM pre1900 
+WHERE MATCH(author,title) 
+AGAINST('"origin of"' IN BOOLEAN MODE);
+
+//Uso de UPDATE ... SET 
+UPDATE pre1900 SET author='Mark Twain (Samuel Langhorne Clemens)' 
+WHERE author='Mark Twain'; 
+UPDATE pre1900 SET category='Classic Fiction' 
+WHERE category='Fiction';
+
+//Usando ORDER BY
+SELECT author,title 
+FROM pre1900 ORDER BY author; 
+
+SELECT author,title 
+FROM pre1900 ORDER BY title DESC; 
+
+SELECT author,title,year 
+FROM pre1900 ORDER BY author,year DESC; 
+
+SELECT category,COUNT(author) 
+FROM pre1900 GROUP BY category;
+
+//Creando y llenando la tabla de clientes 
+CREATE TABLE customers ( 
+name VARCHAR(128), 
+isbn VARCHAR(13), 
+PRIMARY KEY (isbn)) ENGINE InnoDB; 
+
+INSERT INTO customers(name,isbn) 
+VALUES('Joe Bloggs','9780099533474'); 
+INSERT INTO customers(name,isbn) 
+VALUES('Mary Smith','9780582506206'); 
+INSERT INTO customers(name,isbn) 
+VALUES('Jack Wilson','9780517123201'); 
+SELECT * FROM customers;
+
+//Uniendo dos tablas en un solo SELECT 
+SELECT name,author,title 
+FROM customers,pre1900 
+WHERE customers.isbn=pre1900.isbn; 
+
+SELECT name,author,title 
+FROM customers NATURAL JOIN pre1900; 
+
+SELECT name,author,title 
+FROM customers JOIN pre1900 ON customers.isbn=pre1900.isbn;
+
+//Uso de AS
+
+SELECT name,author,title from customers AS cust, pre1900 
+AS class WHERE cust.isbn=class.isbn;
+
+SELECT name AS customer FROM customers ORDER BY customer;
+
+//Uso de operadores lógicos
+
+SELECT author,title 
+FROM pre1900
+ WHERE author LIKE "Charles%" 
+AND author LIKE "%Darwin"; 
+
+SELECT author,title 
+FROM pre1900
+WHERE author LIKE "%Mark Twain%" 
+OR author LIKE "%Samuel Langhorne Clemens%"; 
+
+SELECT author,title 
+FROM pre1900
+WHERE author LIKE "Charles%" 
+AND author NOT LIKE "%Darwin";
+
+//Creación de una tabla lista para transacciones
+
+CREATE TABLE accounts ( 
+number INT, 
+balance FLOAT, 
+PRIMARY KEY(number) ) ENGINE InnoDB; 
+
+DESCRIBE accounts;
+
+//Llenando tabla cuentas
+
+INSERT INTO accounts(number, balance) 
+VALUES(12345, 1025.50); 
+
+INSERT INTO accounts(number, balance) 
+VALUES(67890, 140.00); 
+
+SELECT * FROM accounts;
+
+
+//Transacción en MySQL
+
+BEGIN; 
+UPDATE accounts SET balance=balance+25.11 
+WHERE number=12345; 
+COMMIT; 
+SELECT * FROM accounts;
+
+
+//Transacción de transferencia de fondos
+
+BEGIN; 
+UPDATE accounts SET balance=balance-250 
+WHERE number=12345; 
+UPDATE accounts SET balance=balance+250 
+WHERE number=67890; 
+SELECT * FROM accounts;
+
+//Cancelar una transacción usando ROLLBACK
+ROLLBACK; 
+SELECT * FROM accounts;
+
+//Comando EXPLAIN
+
+EXPLAIN SELECT * FROM accounts WHERE number='12345';
+
+

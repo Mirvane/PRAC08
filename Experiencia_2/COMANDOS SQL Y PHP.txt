@@ -1,0 +1,51 @@
+//Código SQL para insertar datos en la tabla 'publications'
+INSERT INTO classics(author, title, type, year) 
+VALUES('Mark Twain','The Adventures of Tom Sawyer','Fiction','1876'); 
+INSERT INTO classics(author, title, type, year) 
+VALUES('Jane Austen','Pride and Prejudice','Fiction','1811'); 
+INSERT INTO classics(author, title, type, year) 
+VALUES('Charles Darwin','The Origin of Species','Non- Fiction','1856'); 
+INSERT INTO classics(author, title, type, year) 
+VALUES('Charles Dickens','The Old Curiosity Shop','Fiction','1841'); 
+INSERT INTO classics(author, title, type, year) 
+VALUES('William Shakespeare','Romeo and Juliet','Play','1594');
+
+//Cambio del tipo de dato de la columna 'year'
+ALTER TABLE classics MODIFY year SMALLINT;
+
+//Agregar índices a la tabla 'classics'
+ALTER TABLE classics ADD INDEX(author(20)); 
+ALTER TABLE classics ADD INDEX(title(20)); 
+ALTER TABLE classics ADD INDEX(type(4)); 
+ALTER TABLE classics ADD INDEX(year); 
+DESCRIBE classics;
+
+//Código PHP para insertar datos en la tabla 'publications'
+
+$sql = "INSERT INTO `classics` (`author`, `title`, `type`, `year`) 
+VALUES (\'Mark Twain\', \'The Adventures of Tom Sawyer\', \'Fiction\', \'1876\');";
+
+$sql = "INSERT INTO `classics` (`author`, `title`, `type`, `year`) 
+VALUES (\'Jane Austen\', \'Pride and Prejudice\', \'Fiction\', \'1811\');";
+
+$sql = "INSERT INTO `classics` (`author`, `title`, `type`, `year`) 
+VALUES (\'Charles Darwin\', \'The Origin of Species\', \'Non- Fiction\', \'1856\');";
+
+$sql = "INSERT INTO `classics` (`author`, `title`, `type`, `year`) 
+VALUES (\'Charles Dickens\', \'The Old Curiosity Shop\', \'Fiction\', \'1841\');";
+
+$sql = "INSERT INTO `classics` (`author`, `title`, `type`, `year`) 
+VALUES (\'William Shakespeare\', \'Romeo and Juliet\', \'Play\', \'1594\');";
+
+
+
+//Cambio del tipo de dato de la columna 'year' en PHP
+
+$sql = "ALTER TABLE `classics` CHANGE `year` `year` SMALLINT(4) NOT NULL;";
+
+
+//Agregar índices a la tabla 'classics'
+$sql = "ALTER TABLE `classics` ADD INDEX(`author`);";
+$sql = "ALTER TABLE `classics` ADD INDEX(`title`);";
+$sql = "ALTER TABLE `classics` ADD INDEX(`type`);";
+$sql = "ALTER TABLE `classics` ADD INDEX(`year`);";
